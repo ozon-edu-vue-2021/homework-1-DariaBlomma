@@ -43,12 +43,12 @@
         <h2>How much will!</h2>
         <p><span class="counter"></span> + <span class="step"></span></p>
         <p><strong>Result: <span class="sum"></span></strong></p>
-        <div class="math">
+        <div class="math counter-wrapper">
             Counter:
             <button class="button minus">-1</button>
             <button class="button plus">+1</button>
         </div>
-        <div class="math">
+        <div class="math step-wrapper">
             Step:
             <button class="button minus">-2</button>
             <button class="button plus">+2</button>
@@ -84,8 +84,10 @@
     </script>
     <script>
         const counterEl = document.querySelector('.js-app .counter');
-        const buttonElMinus = document.querySelector('.js-app .minus');
-        const buttonElPlus = document.querySelector('.js-app .plus');
+        const buttonElMinus = document.querySelector('.counter-wrapper .minus');
+        const buttonElPlus = document.querySelector('.counter-wrapper .plus');
+        const buttonStepMinus = document.querySelector('.step-wrapper .minus');
+        const buttonStepPlus = document.querySelector('.step-wrapper .plus');
         const sumEl = document.querySelector('.js-app .sum');
         const stepEl = document.querySelector('.js-app .step');
 
@@ -94,10 +96,22 @@
             step: 2
         };
 
-        const incrementCounterHandler = function () {};
-        const decrementCounterHandler = function () {};
-        //...
-        const getSum = function () {};
+        const incrementCounterHandler = function () {
+            counterEl.textContent = ++data.counter;
+        };
+        const decrementCounterHandler = function () {
+            counterEl.textContent = --data.counter;
+        };
+        const decrementStepHandler = function () {
+            stepEl.textContent = data.step -= 2;
+        };
+        const incrementStepHandler = function () {
+            stepEl.textContent = data.step += 2;
+        };
+
+        const getSum = function () {
+            sumEl.textContent =  data.counter + data.step;
+        };
 
         const queue = [getSum];
 
@@ -106,7 +120,7 @@
             Object.defineProperty(data, key, {
                 get: function () {
                     console.log('get');
-                    // queue.push();
+                    queue.push();
                     return value;
                 },
                 set: function (newValue) {
@@ -122,6 +136,8 @@
         getSum();
         buttonElMinus.addEventListener('click', decrementCounterHandler);
         buttonElPlus.addEventListener('click', incrementCounterHandler);
+        buttonStepMinus.addEventListener('click', decrementStepHandler);
+        buttonStepPlus.addEventListener('click', incrementStepHandler);
     </script>
 </body>
 
